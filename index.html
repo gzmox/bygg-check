@@ -37,7 +37,16 @@
       align-items: center;
       margin: 0.4rem 0;
     }
-    input[type="checkbox"] { margin-right: 0.75rem; width: 1.1em; height: 1.1em; }
+    input[type="checkbox"], input[type="date"], input[type="text"] {
+      margin-right: 0.75rem;
+    }
+    input[type="text"], input[type="date"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
     textarea {
       width: 100%;
       padding: 0.75rem;
@@ -74,67 +83,74 @@
 
   <div class="container">
     <form id="form">
-      <!-- Seksjon 1: Bygg -->
+
+      <!-- Kontrollinformasjon -->
+      <div class="card">
+        <h2><i class="fa-solid fa-calendar"></i> Kontrollinformasjon</h2>
+        <label>Dato for kontroll:<br />
+          <input type="date" name="kontrolldato" required />
+        </label>
+        <label>Utført av (signatur):<br />
+          <input type="text" name="signatur" placeholder="Navn / signatur" required />
+        </label>
+      </div>
+
+      <!-- Seksjonene 1–6 -->
       <div class="card">
         <h2><i class="fa-solid fa-building"></i> 1. Bygningsmessig tilstand</h2>
         <label><input type="checkbox" name="bygg1"> Fasade og yttervegger er fri for skader</label>
-        <label><input type="checkbox" name="bygg2"> Tak er tett, ingen synlige lekkasjer</label>
-        <label><input type="checkbox" name="bygg3"> Vinduer og dører fungerer og lukker tett</label>
-        <label><input type="checkbox" name="bygg4"> Rømningsveier er frie og tydelig merket</label>
-        <label><input type="checkbox" name="bygg5"> Trapper og rekkverk er sikre og i god stand</label>
+        <label><input type="checkbox" name="bygg2"> Tak er tett, ingen lekkasjer</label>
+        <label><input type="checkbox" name="bygg3"> Vinduer og dører lukker tett</label>
+        <label><input type="checkbox" name="bygg4"> Rømningsveier er frie og merket</label>
+        <label><input type="checkbox" name="bygg5"> Trapper og rekkverk er i god stand</label>
       </div>
 
-      <!-- Seksjon 2: Brannsikkerhet -->
       <div class="card">
         <h2><i class="fa-solid fa-fire"></i> 2. Brannsikkerhet</h2>
         <label><input type="checkbox" name="brann1"> Brannalarmanlegg fungerer og er testet</label>
-        <label><input type="checkbox" name="brann2"> Røykvarslere er korrekt plassert og virker</label>
-        <label><input type="checkbox" name="brann3"> Slokkeutstyr er tilgjengelig og kontrollert</label>
-        <label><input type="checkbox" name="brann4"> Branninstruks og rømningsplan er oppslått</label>
-        <label><input type="checkbox" name="brann5"> Nødlys fungerer som de skal</label>
+        <label><input type="checkbox" name="brann2"> Røykvarslere er operative</label>
+        <label><input type="checkbox" name="brann3"> Slokkeutstyr er kontrollert</label>
+        <label><input type="checkbox" name="brann4"> Branninstruks og rømningsplan er synlig</label>
+        <label><input type="checkbox" name="brann5"> Nødlys fungerer</label>
       </div>
 
-      <!-- Seksjon 3: Elektrisk anlegg -->
       <div class="card">
         <h2><i class="fa-solid fa-bolt"></i> 3. Elektrisk anlegg</h2>
-        <label><input type="checkbox" name="el1"> Sikringsskap er tilgjengelige og merket</label>
-        <label><input type="checkbox" name="el2"> Ingen synlige skader på ledninger</label>
-        <label><input type="checkbox" name="el3"> Alle kontakter er hele og trygge</label>
+        <label><input type="checkbox" name="el1"> Sikringsskap tilgjengelig og merket</label>
+        <label><input type="checkbox" name="el2"> Ingen skader på ledninger</label>
+        <label><input type="checkbox" name="el3"> Kontakter er hele og jordet</label>
         <label><input type="checkbox" name="el4"> Jordfeilbryter er testet nylig</label>
         <label><input type="checkbox" name="el5"> Nødbelysning fungerer</label>
       </div>
 
-      <!-- Seksjon 4: VVS og ventilasjon -->
       <div class="card">
         <h2><i class="fa-solid fa-wind"></i> 4. VVS og ventilasjon</h2>
-        <label><input type="checkbox" name="vvs1"> Ingen lekkasjer på rør eller kraner</label>
-        <label><input type="checkbox" name="vvs2"> Vanntrykk og temperatur er tilfredsstillende</label>
-        <label><input type="checkbox" name="vvs3"> Ventilasjon fungerer og har rene filtre</label>
+        <label><input type="checkbox" name="vvs1"> Ingen lekkasjer på rør</label>
+        <label><input type="checkbox" name="vvs2"> Vanntrykk og temperatur er OK</label>
+        <label><input type="checkbox" name="vvs3"> Ventilasjon fungerer og filtrene er rene</label>
         <label><input type="checkbox" name="vvs4"> Kjøling og varme fungerer</label>
       </div>
 
-      <!-- Seksjon 5: Renhold og hygiene -->
       <div class="card">
         <h2><i class="fa-solid fa-broom"></i> 5. Renhold og hygiene</h2>
-        <label><input type="checkbox" name="rh1"> Avfallsbeholdere er tilgjengelige og tømmes</label>
-        <label><input type="checkbox" name="rh2"> Sanitæranlegg er rene og fungerer</label>
-        <label><input type="checkbox" name="rh3"> Rengjøringsrutiner følges</label>
+        <label><input type="checkbox" name="rh1"> Avfallshåndtering fungerer</label>
+        <label><input type="checkbox" name="rh2"> Sanitæranlegg er rene</label>
+        <label><input type="checkbox" name="rh3"> Renholdsrutiner følges</label>
         <label><input type="checkbox" name="rh4"> Såpe og papir er tilgjengelig</label>
       </div>
 
-      <!-- Seksjon 6: Universell utforming -->
       <div class="card">
         <h2><i class="fa-solid fa-accessible-icon"></i> 6. Universell utforming</h2>
         <label><input type="checkbox" name="uu1"> Inngang er trinnfri eller tilrettelagt</label>
         <label><input type="checkbox" name="uu2"> Tilgjengelig toalett for rullestolbrukere</label>
         <label><input type="checkbox" name="uu3"> Informasjonsskilt er lett lesbare</label>
-        <label><input type="checkbox" name="uu4"> Tilrettelegging for synshemmede</label>
+        <label><input type="checkbox" name="uu4"> Tilrettelegging for synshemmede finnes</label>
       </div>
 
       <!-- Notater -->
       <div class="card">
         <h2><i class="fa-solid fa-note-sticky"></i> Notater</h2>
-        <textarea name="notater" rows="4" placeholder="Skriv dine observasjoner eller avvik her..."></textarea>
+        <textarea name="notater" rows="4" placeholder="Skriv notater eller observasjoner her..."></textarea>
       </div>
 
       <!-- Knappene -->
@@ -148,7 +164,7 @@
     </form>
   </div>
 
-  <!-- JS-libs og funksjoner -->
+  <!-- JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
@@ -160,7 +176,7 @@
         if (el.name) data[el.name] = el.type === 'checkbox' ? el.checked : el.value;
       });
       localStorage.setItem(nøkkel, JSON.stringify(data));
-      alert('✔️ Lagret');
+      alert('✔️ Lagret!');
     }
 
     function hent() {
@@ -183,21 +199,76 @@
     async function eksporterPDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-      doc.text('Egenkontroll Næringsbygg', 40, 40);
-      let y = 70;
       const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
-      for (const [key, val] of Object.entries(data)) {
-        const v = typeof val === 'boolean' ? (val ? '✅' : '❌') : val;
-        doc.text(`${key}: ${v}`, 40, y);
-        y += 20;
-        if (y > 780) { doc.addPage(); y = 40; }
+      let y = 40;
+
+      doc.setFontSize(16);
+      doc.text('Egenkontroll næringsbygg', 40, y);
+      y += 30;
+
+      const seksjoner = [
+        ['1. Bygg', ['bygg1','bygg2','bygg3','bygg4','bygg5']],
+        ['2. Brann', ['brann1','brann2','brann3','brann4','brann5']],
+        ['3. Elektrisk', ['el1','el2','el3','el4','el5']],
+        ['4. VVS/Ventilasjon', ['vvs1','vvs2','vvs3','vvs4']],
+        ['5. Renhold', ['rh1','rh2','rh3','rh4']],
+        ['6. Universell utforming', ['uu1','uu2','uu3','uu4']],
+      ];
+
+      doc.setFontSize(12);
+      for (const [title, keys] of seksjoner) {
+        doc.setFont(undefined, 'bold'); doc.text(title, 40, y); y += 20;
+        doc.setFont(undefined, 'normal');
+        for (const key of keys) {
+          doc.text(`• ${key}: ${data[key] ? '✅' : '❌'}`, 60, y);
+          y += 18; if (y > 750) { doc.addPage(); y = 40; }
+        }
+        y += 10;
       }
+
+      if (data.notater) {
+        doc.setFont(undefined, 'bold');
+        doc.text('📝 Notater', 40, y); y += 20;
+        doc.setFont(undefined, 'normal');
+        const lines = doc.splitTextToSize(data.notater, 480);
+        doc.text(lines, 60, y); y += lines.length * 18;
+      }
+
+      y += 30;
+      doc.setFont(undefined, 'bold');
+      doc.text('Signatur og dato', 40, y); y += 20;
+      doc.setFont(undefined, 'normal');
+      doc.text(`🖊️ Utført av: ${data.signatur || ''}`, 60, y); y += 18;
+      doc.text(`📅 Dato: ${data.kontrolldato || ''}`, 60, y);
+
       doc.save('egenkontroll.pdf');
     }
 
     function eksporterExcel() {
       const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
-      const ws = XLSX.utils.json_to_sheet([data]);
+      const rows = [];
+
+      const seksjoner = {
+        '1. Bygg': ['bygg1','bygg2','bygg3','bygg4','bygg5'],
+        '2. Brann': ['brann1','brann2','brann3','brann4','brann5'],
+        '3. Elektrisk': ['el1','el2','el3','el4','el5'],
+        '4. VVS/Vent': ['vvs1','vvs2','vvs3','vvs4'],
+        '5. Renhold': ['rh1','rh2','rh3','rh4'],
+        '6. Universell utforming': ['uu1','uu2','uu3','uu4']
+      };
+
+      for (const [title, keys] of Object.entries(seksjoner)) {
+        rows.push({ Seksjon: title });
+        for (const key of keys) {
+          rows.push({ Punkt: key, Status: data[key] ? 'OK' : 'Mangler' });
+        }
+        rows.push({});
+      }
+
+      rows.push({ Notater: data.notater || '' });
+      rows.push({ Signatur: data.signatur || '', Dato: data.kontrolldato || '' });
+
+      const ws = XLSX.utils.json_to_sheet(rows);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Egenkontroll');
       XLSX.writeFile(wb, 'egenkontroll.xlsx');
