@@ -2,308 +2,218 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8" />
+  <title>Sjekkliste Yrkesbygg</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Egenkontroll Næringsbygg</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #f4f6f9;
       color: #333;
-      margin: 0;
-    }
-    header {
-      background: #4a90e2;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    .container {
-      max-width: 800px;
+      padding: 2rem;
+      max-width: 1000px;
       margin: auto;
-      padding: 1rem;
     }
-    .card {
-      background: white;
-      border-radius: 10px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    }
-    .card h2 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-    label {
-      display: block;
-      margin: 0.5rem 0;
-    }
-    input[type="text"],
-    input[type="date"],
-    textarea {
+    h1 { color: #b30000; }
+    table {
       width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.25rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
     }
-    textarea {
-      resize: vertical;
+    th, td {
+      border: 1px solid #ddd;
+      padding: 6px;
     }
-    .buttons {
+    th {
+      background: #eee;
+      text-align: left;
+    }
+    input[type="text"] {
+      width: 98%;
+      padding: 5px;
+    }
+    .section-title {
+      background: #ddd;
+      font-weight: bold;
+    }
+    .btns {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 1rem;
       margin-top: 1rem;
     }
     button {
-      flex: 1;
-      padding: 0.75rem;
+      padding: 10px 15px;
+      font-weight: bold;
       border: none;
-      border-radius: 5px;
       background: #4a90e2;
       color: white;
-      font-weight: bold;
       cursor: pointer;
+      border-radius: 5px;
     }
-    button:hover {
-      opacity: 0.9;
-    }
-    input[type="file"] {
-      margin-top: 0.5rem;
-    }
-    #preview {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 1rem;
-    }
-    #preview img {
-      max-width: 100px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    #download-links {
-      margin-top: 1rem;
-      display: none;
-    }
-    #download-links a {
-      display: inline-block;
-      margin-right: 10px;
-      color: #4a90e2;
-      font-weight: bold;
+    input[type="checkbox"] {
+      transform: scale(1.2);
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Egenkontroll Næringsbygg</h1>
-  </header>
-  <div class="container">
-    <form id="form">
-      <div class="card">
-        <h2>Kontrollinformasjon</h2>
-        <label>Dato for kontroll:
-          <input type="date" name="kontrolldato" id="kontrolldato" />
-        </label>
-        <label>Utført av (signatur):
-          <input type="text" name="signatur" placeholder="Navn / signatur" required />
-        </label>
-      </div>
+  <h1>Sjekkliste: Yrkesbygg</h1>
+  <p>Dato: <input type="date" id="kontrolldato" /></p>
+  <p>Firma/montør: <input type="text" id="signatur" placeholder="Navn/firma" /></p>
 
-      <div class="card">
-        <h2>🖼️ Last opp bilder</h2>
-        <input type="file" id="bilder" multiple accept="image/*" />
-        <div id="preview"></div>
-        <label><input type="checkbox" id="inkluderPdfBilder" /> Inkluder bilder i PDF</label>
-        <label><input type="checkbox" id="inkluderExcelBilder" /> Inkluder bilder i Excel (lenke)</label>
-      </div>
+  <form id="checklistForm">
+    <table id="checklist">
+      <thead>
+        <tr>
+          <th>Spørsmål</th>
+          <th>Ja</th>
+          <th>Nei</th>
+          <th>Merknad</th>
+        </tr>
+      </thead>
+      <tbody id="checklistBody"></tbody>
+    </table>
 
-      <!-- Sjekkliste-seksjoner -->
-      <div id="seksjoner"></div>
+    <div class="btns">
+      <button type="button" onclick="generatePDF()">📄 Last ned PDF</button>
+      <button type="button" onclick="generateExcel()">📊 Last ned Excel</button>
+    </div>
+  </form>
 
-      <div class="card">
-        <h2>📝 Notater</h2>
-        <textarea name="notater" rows="4" placeholder="Skriv notater eller observasjoner her..."></textarea>
-      </div>
-
-      <div class="buttons">
-        <button type="button" onclick="lagre()">💾 Lagre</button>
-        <button type="button" onclick="hent()">🔄 Hent</button>
-        <button type="button" onclick="nullstill()">🗑️ Nullstill</button>
-        <button type="button" onclick="eksporterPDF()">📄 PDF</button>
-        <button type="button" onclick="eksporterExcel()">📊 Excel</button>
-      </div>
-
-      <div id="download-links">
-        <p>Last ned:</p>
-        <a id="pdfLink" href="#" download="egenkontroll.pdf">📥 PDF</a>
-        <a id="excelLink" href="#" download="egenkontroll.xlsx">📥 Excel</a>
-      </div>
-    </form>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
-    const nøkkel = 'egenkontroll-data';
-    const today = '2025-07-05';
-    const seksjoner = [
-      ['1. Bygg', ['Fasade og yttervegger', 'Tak er tett', 'Vinduer og dører', 'Rømningsveier', 'Trapper og rekkverk']],
-      ['2. Brann', ['Brannalarmanlegg', 'Røykvarslere', 'Slokkeutstyr', 'Branninstruks', 'Nødlys']],
-      ['3. Elektrisk', ['Sikringsskap', 'Skader på ledninger', 'Kontakter jordet', 'Jordfeilbryter', 'Nødbelysning']],
-      ['4. VVS/Ventilasjon', ['Ingen lekkasjer', 'Vanntrykk og temperatur', 'Ventilasjon filtrert', 'Kjøling og varme']],
-      ['5. Renhold', ['Avfall', 'Sanitæranlegg', 'Renholdsrutiner', 'Såpe og papir']],
-      ['6. Universell utforming', ['Trinnfri inngang', 'Tilgjengelig toalett', 'Lesbare skilt', 'Tilrettelegging synshemmede']],
-      ['7. Dokumentasjon og rutiner', ['HMS-plan oppdatert', 'FDV-dokumentasjon', 'Serviceavtaler', 'Kontrollrapporter', 'Avvik følger opp', 'Rutiner følges']]
-    ];
-
+    const today = new Date().toISOString().split('T')[0];
     document.getElementById('kontrolldato').value = today;
 
-    const seksjonerDiv = document.getElementById('seksjoner');
-    seksjoner.forEach(([title, points], idx) => {
-      const div = document.createElement('div');
-      div.className = 'card';
-      const id = `s${idx + 1}`;
-      div.innerHTML = `<h2>${title}</h2>` + points.map((p, i) =>
-        `<label><input type="checkbox" name="${id}_p${i+1}"> ${p}</label>`).join('');
-      seksjonerDiv.appendChild(div);
-    });
+    const sections = {
+      "Sikkerhet": [
+        "Finnes et godkjent brannalarm-anlegg?",
+        "Har lokalene lysevlanter?",
+        "Er det installert adgangskontroll?",
+        "Har lokalene et godkjent nødlysanlegg?",
+        "Er rømningsveier merket med godkjent ledelys?",
+        "Er sikkerhetssystemet tilkoblet sentral driftskontroll?",
+        "Er det hemsiktsmessige anlegg for skilting, og fasadebelysning?"
+      ],
+      "Lys": [
+        "Er lysarmaturene PCB-frie?",
+        "Er lysanlegget oppgradert i tilfelle ja - når?",
+        "Er det tilstrekkelig lys i alle rom, iht. norm fra Lyskultur?",
+        "Gir lysarmaturene flimrefritt lys?",
+        "Har armaturene individuell justeringsmulighet?",
+        "Har lysanlegget opplev eller nødlys, eller en kombinasjon?",
+        "Ser vi lysslusereflekt i tak/skinner?",
+        "Er det tilstrekkelig dagslysreserver?",
+        "Er det installert tilstedeværelsesdetektorer?",
+        "Hvilke type lyskilder er brukt? (lysrør/glødelamper etc.)",
+        "Hva består lysanlegget av? (downlights, armaturer, u-linjer)"
+      ],
+      "Varme / styring": [
+        "Er det termostat per rom i lokalene?",
+        "Hvis ja - fungerer termostatene skikkelig?",
+        "Finnes det gulvvarme?",
+        "Er det behagelig/korrekt temperatur i lokalene?",
+        "Er det behov for spesiell åpningsstyring?",
+        "Er det installert SD-anlegg som beregning/styrer?",
+        "Er det varmeovner som virker med elektrisk?",
+        "Er det radiatorer koblet til vannbåren varme?",
+        "Er det synlig energimerking i bygget?"
+      ],
+      "El-tavler": [
+        "Er det installert jording?",
+        "Er det installert kursfortegnelse?",
+        "Er det overspenningsvern?",
+        "Er det automatisk overspenningsvern?",
+        "Er det tilrettelagt nødstrømskilde?",
+        "Er det egen beskyttelse av datakursene?",
+        "Er det synlig jordfeilindikator?",
+        "Er det enkle skjemategninger for anlegget?",
+        "Er det installert måling av forbruk?"
+      ],
+      "Skap og føringer": [
+        "Har tavlene tilfredsstillende utførelse?",
+        "Er det oversikt over fordeling i skapet/skapene?",
+        "Er det inntegnet system for varsling av andre feil?",
+        "Har skapet/skapene automatisk sikringer?",
+        "Er det dokumentert kabelføring?",
+        "Er det problemer med uønsket utkopling av sikringer?"
+      ]
+    };
 
-    // Bildevisning
-    const bildeData = [];
-    document.getElementById('bilder').addEventListener('change', e => {
-      const preview = document.getElementById('preview');
-      preview.innerHTML = '';
-      bildeData.length = 0;
-      [...e.target.files].forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          bildeData.push(evt.target.result);
-          const img = document.createElement('img');
-          img.src = evt.target.result;
-          preview.appendChild(img);
-        };
-        reader.readAsDataURL(file);
+    const tbody = document.getElementById('checklistBody');
+    Object.entries(sections).forEach(([title, questions]) => {
+      const headerRow = document.createElement('tr');
+      headerRow.innerHTML = `<td class="section-title" colspan="4">${title}</td>`;
+      tbody.appendChild(headerRow);
+
+      questions.forEach((q, i) => {
+        const row = document.createElement('tr');
+        const id = `${title}_${i}`.replace(/\s+/g, '_');
+        row.innerHTML = `
+          <td>${q}</td>
+          <td><input type="radio" name="${id}" value="Ja" required /></td>
+          <td><input type="radio" name="${id}" value="Nei" /></td>
+          <td><input type="text" name="${id}_merknad" placeholder="..." /></td>
+        `;
+        tbody.appendChild(row);
       });
     });
 
-    function lagre() {
-      const form = document.getElementById('form');
-      const data = {};
-      [...form.elements].forEach(el => {
-        if (el.name) data[el.name] = el.type === 'checkbox' ? el.checked : el.value;
-      });
-      localStorage.setItem(nøkkel, JSON.stringify(data));
-      alert('✔️ Lagret!');
-    }
-
-    function hent() {
-      const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
-      [...document.forms[0].elements].forEach(el => {
-        if (data.hasOwnProperty(el.name)) {
-          el.type === 'checkbox' ? el.checked = data[el.name] : el.value = data[el.name];
-        }
-      });
-    }
-
-    function nullstill() {
-      if (confirm('Slette all lagret data?')) {
-        localStorage.removeItem(nøkkel);
-        document.getElementById('form').reset();
-        document.getElementById('preview').innerHTML = '';
-      }
-    }
-
-    async function eksporterPDF() {
+    async function generatePDF() {
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-      const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
-      let y = 40;
-      doc.setFontSize(16);
-      doc.text('Egenkontroll næringsbygg', 40, y);
-      y += 30;
+      const doc = new jsPDF();
+      const data = [];
+      const form = document.getElementById('checklistForm');
+      const formData = new FormData(form);
 
-      seksjoner.forEach(([title, points], i) => {
-        doc.setFontSize(12);
-        doc.setFont(undefined, 'bold');
-        doc.text(`${title}`, 40, y);
-        y += 20;
-        doc.setFont(undefined, 'normal');
-        points.forEach((txt, j) => {
-          const key = `s${i+1}_p${j+1}`;
-          const val = data[key] ? '✅' : '❌';
-          doc.text(`• ${txt}: ${val}`, 60, y);
-          y += 18;
+      Object.entries(sections).forEach(([title, questions]) => {
+        data.push([{ content: title, colSpan: 3, styles: { halign: 'left', fillColor: [230,230,230] } }]);
+        questions.forEach((q, i) => {
+          const id = `${title}_${i}`.replace(/\s+/g, '_');
+          const status = formData.get(id) || '';
+          const note = formData.get(`${id}_merknad`) || '';
+          data.push([q, status, note]);
         });
-        y += 10;
       });
 
-      if (data.notater) {
-        doc.setFont(undefined, 'bold');
-        doc.text('📝 Notater:', 40, y); y += 20;
-        doc.setFont(undefined, 'normal');
-        const lines = doc.splitTextToSize(data.notater, 460);
-        doc.text(lines, 60, y); y += lines.length * 16;
-      }
+      doc.text(`Sjekkliste: Yrkesbygg`, 14, 20);
+      doc.text(`Dato: ${document.getElementById('kontrolldato').value || ''}`, 14, 30);
+      doc.text(`Firma/montør: ${document.getElementById('signatur').value || ''}`, 14, 40);
 
-      y += 30;
-      doc.setFont(undefined, 'bold');
-      doc.text('Signatur og dato:', 40, y); y += 20;
-      doc.setFont(undefined, 'normal');
-      doc.text(`🖊️ ${data.signatur || ''}`, 60, y); y += 18;
-      doc.text(`📅 ${data.kontrolldato || ''}`, 60, y);
+      doc.autoTable({
+        head: [['Spørsmål', 'Ja/Nei', 'Merknad']],
+        body: data,
+        startY: 50,
+        styles: { fontSize: 8, cellPadding: 2 },
+        headStyles: { fillColor: [200,200,200] }
+      });
 
-      if (document.getElementById('inkluderPdfBilder').checked) {
-        y += 30;
-        doc.setFont(undefined, 'bold');
-        doc.text('🖼️ Vedlagte bilder:', 40, y); y += 20;
-        for (let i = 0; i < bildeData.length; i++) {
-          if (y > 700) { doc.addPage(); y = 40; }
-          doc.addImage(bildeData[i], 'JPEG', 60, y, 100, 75);
-          y += 85;
-        }
-      }
-
-      const blob = doc.output('blob');
-      const url = URL.createObjectURL(blob);
-      document.getElementById('pdfLink').href = url;
-      document.getElementById('download-links').style.display = 'block';
+      doc.save('sjekkliste-yrkesbygg.pdf');
     }
 
-    function eksporterExcel() {
-      const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
+    function generateExcel() {
+      const form = document.getElementById('checklistForm');
+      const formData = new FormData(form);
       const rows = [];
 
-      seksjoner.forEach(([title, points], i) => {
+      Object.entries(sections).forEach(([title, questions]) => {
         rows.push({ Seksjon: title });
-        points.forEach((txt, j) => {
-          const key = `s${i+1}_p${j+1}`;
-          rows.push({ Punkt: txt, Status: data[key] ? 'OK' : 'Mangler' });
+        questions.forEach((q, i) => {
+          const id = `${title}_${i}`.replace(/\s+/g, '_');
+          rows.push({
+            Spørsmål: q,
+            Status: formData.get(id) || '',
+            Merknad: formData.get(`${id}_merknad`) || ''
+          });
         });
         rows.push({});
       });
 
-      rows.push({ Notater: data.notater || '' });
-      rows.push({ Signatur: data.signatur || '', Dato: data.kontrolldato || '' });
-
-      if (document.getElementById('inkluderExcelBilder').checked) {
-        bildeData.forEach((base64, i) => {
-          rows.push({ Bilde: `Vedlagt bilde ${i + 1}`, Base64: base64.substring(0, 50) + '...' });
-        });
-      }
-
       const ws = XLSX.utils.json_to_sheet(rows);
       const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Egenkontroll');
-      const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'blob' });
-
-      const url = URL.createObjectURL(wbout);
-      document.getElementById('excelLink').href = url;
-      document.getElementById('download-links').style.display = 'block';
+      XLSX.utils.book_append_sheet(wb, ws, 'Sjekkliste');
+      XLSX.writeFile(wb, 'sjekkliste-yrkesbygg.xlsx');
     }
-
-    window.onload = hent;
   </script>
 </body>
 </html>
