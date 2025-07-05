@@ -1,122 +1,171 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Egenkontroll Næringsbygg</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-
   <style>
     :root {
-      --bg: #f0f2f5;
+      --bg: #f4f6f9;
       --card: #fff;
       --primary: #4a90e2;
       --accent: #50e3c2;
       --text: #333;
-      --shadow: rgba(0,0,0,0.1);
+      --shadow: rgba(0, 0, 0, 0.05);
     }
-    * {box-sizing: border-box;}
-    body {margin:0; font-family:sans-serif; background: var(--bg); color: var(--text);}
-    header {background: var(--primary); padding: 1em; color: #fff; text-align:center;}
-    .container {max-width: 800px; margin: auto; padding: 1em;}
-    .card {background: var(--card); border-radius: 8px; margin:1em 0; padding:1em; box-shadow: 0 4px 12px var(--shadow);}
-    .card h2 {display:flex; align-items:center; font-size:1.2rem;}
-    .card h2 i {margin-right:0.5em; color: var(--accent);}
-    label {display:flex; align-items:center; margin:0.5em 0;}
-    input[type=checkbox] {margin-right:0.75em; width:1.1em; height:1.1em;}
-    textarea {width:100%; padding:0.75em; resize:vertical; border:1px solid #ddd; border-radius:4px;}
-    textarea:focus, input:focus {outline:none; border-color: var(--primary);}
-    .buttons {display:flex; flex-wrap:wrap; gap:0.75em; margin:1em 0;}
-    button {flex:1; min-width:120px; padding:0.75em; border:none; border-radius:4px; background:var(--primary); color:#fff; cursor:pointer; font-weight:bold;}
-    button:hover {opacity:0.9;}
-    @media (max-width:600px) {
-      .buttons {flex-direction:column;}
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+    header { background: var(--primary); color: #fff; padding: 1rem; text-align: center; }
+    .container { max-width: 800px; margin: auto; padding: 1rem; }
+    .card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+    .card h2 {
+      display: flex;
+      align-items: center;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card h2 i { margin-right: 0.5rem; color: var(--accent); }
+    label {
+      display: flex;
+      align-items: center;
+      margin: 0.4rem 0;
+    }
+    input[type="checkbox"] { margin-right: 0.75rem; width: 1.1em; height: 1.1em; }
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    button {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 5px;
+      background: var(--primary);
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { opacity: 0.9; }
+    @media (max-width: 600px) {
+      .buttons { flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <header><h1>Egenkontroll Næringsbygg</h1></header>
+  <header>
+    <h1>Egenkontroll Næringsbygg</h1>
+  </header>
+
   <div class="container">
     <form id="form">
-      <!-- Bygg -->
+      <!-- Seksjon 1: Bygg -->
       <div class="card">
-        <h2><i class="fa-solid fa-building"></i> Bygg</h2>
-        <label><input type="checkbox" name="bygg1"> Fasade/yttervegger</label>
-        <label><input type="checkbox" name="bygg2"> Tak uten lekkasjer</label>
-        <label><input type="checkbox" name="bygg3"> Vinduer og dører</label>
+        <h2><i class="fa-solid fa-building"></i> 1. Bygningsmessig tilstand</h2>
+        <label><input type="checkbox" name="bygg1"> Fasade og yttervegger er fri for skader</label>
+        <label><input type="checkbox" name="bygg2"> Tak er tett, ingen synlige lekkasjer</label>
+        <label><input type="checkbox" name="bygg3"> Vinduer og dører fungerer og lukker tett</label>
+        <label><input type="checkbox" name="bygg4"> Rømningsveier er frie og tydelig merket</label>
+        <label><input type="checkbox" name="bygg5"> Trapper og rekkverk er sikre og i god stand</label>
       </div>
 
-      <!-- Brann -->
+      <!-- Seksjon 2: Brannsikkerhet -->
       <div class="card">
-        <h2><i class="fa-solid fa-fire"></i> Brann</h2>
-        <label><input type="checkbox" name="brann1"> Brannalarmanlegg testet</label>
-        <label><input type="checkbox" name="brann2"> Røykvarslere</label>
-        <label><input type="checkbox" name="brann3"> Slokkeutstyr</label>
+        <h2><i class="fa-solid fa-fire"></i> 2. Brannsikkerhet</h2>
+        <label><input type="checkbox" name="brann1"> Brannalarmanlegg fungerer og er testet</label>
+        <label><input type="checkbox" name="brann2"> Røykvarslere er korrekt plassert og virker</label>
+        <label><input type="checkbox" name="brann3"> Slokkeutstyr er tilgjengelig og kontrollert</label>
+        <label><input type="checkbox" name="brann4"> Branninstruks og rømningsplan er oppslått</label>
+        <label><input type="checkbox" name="brann5"> Nødlys fungerer som de skal</label>
       </div>
 
-      <!-- Elektrisk -->
+      <!-- Seksjon 3: Elektrisk anlegg -->
       <div class="card">
-        <h2><i class="fa-solid fa-bolt"></i> Elektrisk</h2>
-        <label><input type="checkbox" name="elk1"> Sikringsskap og tavler</label>
-        <label><input type="checkbox" name="elk2"> Ingen skadet ledning</label>
-        <label><input type="checkbox" name="elk3"> Nødbelys fungerer</label>
+        <h2><i class="fa-solid fa-bolt"></i> 3. Elektrisk anlegg</h2>
+        <label><input type="checkbox" name="el1"> Sikringsskap er tilgjengelige og merket</label>
+        <label><input type="checkbox" name="el2"> Ingen synlige skader på ledninger</label>
+        <label><input type="checkbox" name="el3"> Alle kontakter er hele og trygge</label>
+        <label><input type="checkbox" name="el4"> Jordfeilbryter er testet nylig</label>
+        <label><input type="checkbox" name="el5"> Nødbelysning fungerer</label>
       </div>
 
-      <!-- VVS/Vent -->
+      <!-- Seksjon 4: VVS og ventilasjon -->
       <div class="card">
-        <h2><i class="fa-solid fa-wind"></i> VVS / Ventilasjon</h2>
-        <label><input type="checkbox" name="vvs1"> Ingen lekkasjer</label>
-        <label><input type="checkbox" name="vvs2"> Ventilasjon filtrert</label>
-        <label><input type="checkbox" name="vvs3"> Temperatur og trykk OK</label>
+        <h2><i class="fa-solid fa-wind"></i> 4. VVS og ventilasjon</h2>
+        <label><input type="checkbox" name="vvs1"> Ingen lekkasjer på rør eller kraner</label>
+        <label><input type="checkbox" name="vvs2"> Vanntrykk og temperatur er tilfredsstillende</label>
+        <label><input type="checkbox" name="vvs3"> Ventilasjon fungerer og har rene filtre</label>
+        <label><input type="checkbox" name="vvs4"> Kjøling og varme fungerer</label>
       </div>
 
-      <!-- Renhold -->
+      <!-- Seksjon 5: Renhold og hygiene -->
       <div class="card">
-        <h2><i class="fa-solid fa-broom"></i> Renhold / Hygiene</h2>
-        <label><input type="checkbox" name="rh1"> Avfallshåndtering</label>
-        <label><input type="checkbox" name="rh2"> Sanitæranlegg ryddige</label>
+        <h2><i class="fa-solid fa-broom"></i> 5. Renhold og hygiene</h2>
+        <label><input type="checkbox" name="rh1"> Avfallsbeholdere er tilgjengelige og tømmes</label>
+        <label><input type="checkbox" name="rh2"> Sanitæranlegg er rene og fungerer</label>
+        <label><input type="checkbox" name="rh3"> Rengjøringsrutiner følges</label>
+        <label><input type="checkbox" name="rh4"> Såpe og papir er tilgjengelig</label>
       </div>
 
-      <!-- Universell -->
+      <!-- Seksjon 6: Universell utforming -->
       <div class="card">
-        <h2><i class="fa-solid fa-accessible-icon"></i> Universell utforming</h2>
-        <label><input type="checkbox" name="uni1"> Trinnfri inngang</label>
-        <label><input type="checkbox" name="uni2"> Tilgjengelig toalett</label>
+        <h2><i class="fa-solid fa-accessible-icon"></i> 6. Universell utforming</h2>
+        <label><input type="checkbox" name="uu1"> Inngang er trinnfri eller tilrettelagt</label>
+        <label><input type="checkbox" name="uu2"> Tilgjengelig toalett for rullestolbrukere</label>
+        <label><input type="checkbox" name="uu3"> Informasjonsskilt er lett lesbare</label>
+        <label><input type="checkbox" name="uu4"> Tilrettelegging for synshemmede</label>
       </div>
 
       <!-- Notater -->
       <div class="card">
-        <h2><i class="fa-solid fa-sticky-note"></i> Notater</h2>
-        <textarea name="notes" rows="4" placeholder="Skriv her..."></textarea>
+        <h2><i class="fa-solid fa-note-sticky"></i> Notater</h2>
+        <textarea name="notater" rows="4" placeholder="Skriv dine observasjoner eller avvik her..."></textarea>
       </div>
 
+      <!-- Knappene -->
       <div class="buttons">
-        <button type="button" onclick="save()">💾 Lagre</button>
-        <button type="button" onclick="load()">🔄 Hent</button>
-        <button type="button" onclick="resetAll()">🗑️ Nullstill</button>
-        <button type="button" onclick="exportPDF()">📄 Eksporter PDF</button>
-        <button type="button" onclick="exportXLS()">📊 Eksporter Excel</button>
+        <button type="button" onclick="lagre()">💾 Lagre</button>
+        <button type="button" onclick="hent()">🔄 Hent</button>
+        <button type="button" onclick="nullstill()">🗑️ Nullstill</button>
+        <button type="button" onclick="eksporterPDF()">📄 PDF</button>
+        <button type="button" onclick="eksporterExcel()">📊 Excel</button>
       </div>
     </form>
   </div>
 
+  <!-- JS-libs og funksjoner -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
-    const key = 'egenkontroll-data';
+    const nøkkel = 'egenkontroll-data';
 
-    function save() {
+    function lagre() {
       const data = {};
-      [...document.getElementById('form').elements].forEach(el => {
-        if (el.name) data[el.name] = el.type==='checkbox'? el.checked : el.value;
+      [...document.forms[0].elements].forEach(el => {
+        if (el.name) data[el.name] = el.type === 'checkbox' ? el.checked : el.value;
       });
-      localStorage.setItem(key, JSON.stringify(data));
-      alert('Lagret!');
+      localStorage.setItem(nøkkel, JSON.stringify(data));
+      alert('✔️ Lagret');
     }
 
-    function load() {
-      const data = JSON.parse(localStorage.getItem(key) || '{}');
-      [...document.getElementById('form').elements].forEach(el => {
+    function hent() {
+      const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
+      [...document.forms[0].elements].forEach(el => {
         if (data.hasOwnProperty(el.name)) {
           if (el.type === 'checkbox') el.checked = data[el.name];
           else el.value = data[el.name];
@@ -124,46 +173,37 @@
       });
     }
 
-    function resetAll() {
-      if (confirm('Slette all data?')) {
-        localStorage.removeItem(key);
-        document.getElementById('form').reset();
+    function nullstill() {
+      if (confirm('Slette all lagret data?')) {
+        localStorage.removeItem(nøkkel);
+        document.forms[0].reset();
       }
     }
 
-    // PDF-export
-    async function exportPDF() {
-      load();
+    async function eksporterPDF() {
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit:'pt', format:'a4' });
+      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
       doc.text('Egenkontroll Næringsbygg', 40, 40);
       let y = 70;
-      [...document.getElementById('form').elements].forEach(el => {
-        if (el.name && el.type !== 'button') {
-          const label = el.closest('label')?.innerText || el.name;
-          const val = el.type === 'checkbox' ? (el.checked ? '✅' : '❌') : el.value;
-          doc.text(`${label}: ${val}`, 40, y);
-          y += 20;
-          if (y > 750){ doc.addPage(); y = 40; }
-        }
-      });
+      const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
+      for (const [key, val] of Object.entries(data)) {
+        const v = typeof val === 'boolean' ? (val ? '✅' : '❌') : val;
+        doc.text(`${key}: ${v}`, 40, y);
+        y += 20;
+        if (y > 780) { doc.addPage(); y = 40; }
+      }
       doc.save('egenkontroll.pdf');
     }
 
-    // Excel-export
-    function exportXLS() {
-      load();
-      const data = {};
-      [...document.getElementById('form').elements].forEach(el => {
-        if (el.name) data[el.name] = el.type==='checkbox'? (el.checked?1:0) : el.value;
-      });
+    function eksporterExcel() {
+      const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
       const ws = XLSX.utils.json_to_sheet([data]);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Egenkontroll');
       XLSX.writeFile(wb, 'egenkontroll.xlsx');
     }
 
-    window.onload = load;
+    window.onload = hent;
   </script>
 </body>
 </html>
