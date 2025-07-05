@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <title>Egenkontroll Næringsbygg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    section {
+      margin-bottom: 30px;
+    }
+    label {
+      display: block;
+      margin: 5px 0;
+    }
+    textarea {
+      width: 100%;
+      height: 80px;
+    }
+    .button-row {
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>✅ Egenkontroll Næringsbygg</h1>
+
+  <form id="checklistForm">
+    <section>
+      <h2>🏢 Bygningsmessig tilstand</h2>
+      <label><input type="checkbox" name="bygg1"> Fasade og yttervegger i god stand</label>
+      <label><input type="checkbox" name="bygg2"> Tak uten lekkasjer</label>
+      <label><input type="checkbox" name="bygg3"> Vinduer og dører fungerer</label>
+    </section>
+
+    <section>
+      <h2>🔥 Brannsikkerhet</h2>
+      <label><input type="checkbox" name="brann1"> Brannalarmanlegg testet</label>
+      <label><input type="checkbox" name="brann2"> Røykvarslere i orden</label>
+      <label><input type="checkbox" name="brann3"> Slokkeutstyr kontrollert</label>
+    </section>
+
+    <section>
+      <h2>📑 Tilleggsnotater</h2>
+      <textarea name="notater" placeholder="Skriv dine notater her..."></textarea>
+    </section>
+
+    <div class="button-row">
+      <button type="button" onclick="lagre()">💾 Lagre</button>
+      <button type="button" onclick="lastInn()">🔄 Hent lagret</button>
+      <button type="button" onclick="nullstill()">🗑️ Nullstill</button>
+    </div>
+  </form>
+
+  <script>
+    function lagre() {
+      const form = document.getElementById('checklistForm');
+      const data = {};
+      [...form.elements].forEach(el => {
+        if (el.type === 'checkbox') {
+          data[el.name] = el.checked;
+        } else if (el.type === 'textarea') {
+          data[el.name] = el.value;
+        }
+      });
+      localStorage.setItem('egenkontroll_data', JSON.stringify(data));
+      alert('✔️ Lagret!');
+    }
+
+    function lastInn() {
+      const data = JSON.parse(localStorage.getItem('egenkontroll_data') || '{}');
+      const form = document.getElementById('checklistForm');
+      [...form.elements].forEach(el => {
+        if (data.hasOwnProperty(el.name)) {
+          if (el.type === 'checkbox') {
+            el.checked = data[el.name];
+          } else if (el.type === 'textarea') {
+            el.value = data[el.name];
+          }
+        }
+      });
+    }
+
+    function nullstill() {
+      if (confirm('Slette all lagret data?')) {
+        localStorage.removeItem('egenkontroll_data');
+        document.getElementById('checklistForm').reset();
+      }
+    }
+
+    // Last inn ved første besøk
+    window.onload = lastInn;
+  </script>
+</body>
+</html>
