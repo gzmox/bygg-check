@@ -4,77 +4,129 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Egenkontroll Næringsbygg</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #f4f6f9;
-      --card: #fff;
-      --primary: #4a90e2;
-      --accent: #50e3c2;
-      --text: #333;
-      --shadow: rgba(0, 0, 0, 0.05);
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+      color: #333;
+      margin: 0;
     }
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
-    header { background: var(--primary); color: #fff; padding: 1rem; text-align: center; }
-    .container { max-width: 800px; margin: auto; padding: 1rem; }
-    .card { background: var(--card); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 4px 12px var(--shadow); }
-    .card h2 { display: flex; align-items: center; font-size: 1.1rem; margin-bottom: 0.5rem; }
-    .card h2 i { margin-right: 0.5rem; color: var(--accent); }
-    label { display: block; margin: 0.4rem 0; }
-    input[type="checkbox"], input[type="date"], input[type="text"], input[type="file"] { margin-right: 0.75rem; }
-    input[type="text"], input[type="date"], input[type="file"] {
-      width: 100%; padding: 0.5rem; margin-top: 0.25rem;
-      border: 1px solid #ccc; border-radius: 5px;
+    header {
+      background: #4a90e2;
+      color: white;
+      padding: 1rem;
+      text-align: center;
     }
-    textarea { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 5px; resize: vertical; }
-    .img-preview img { max-width: 100px; margin: 0.5rem; border-radius: 5px; }
-    .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1rem; }
-    button { flex: 1; padding: 0.75rem; border: none; border-radius: 5px; background: var(--primary); color: #fff; cursor: pointer; font-weight: bold; }
-    button:hover { opacity: 0.9; }
-    .download-links a { margin-right: 10px; }
-    @media (max-width: 600px) { .buttons { flex-direction: column; } }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    label {
+      display: block;
+      margin: 0.5rem 0;
+    }
+    input[type="text"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    textarea {
+      resize: vertical;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    button {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 5px;
+      background: #4a90e2;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    input[type="file"] {
+      margin-top: 0.5rem;
+    }
+    #preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    #preview img {
+      max-width: 100px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #download-links {
+      margin-top: 1rem;
+      display: none;
+    }
+    #download-links a {
+      display: inline-block;
+      margin-right: 10px;
+      color: #4a90e2;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <header><h1>Egenkontroll Næringsbygg</h1></header>
+  <header>
+    <h1>Egenkontroll Næringsbygg</h1>
+  </header>
   <div class="container">
     <form id="form">
-      <!-- Kontrollinformasjon -->
       <div class="card">
-        <h2><i class="fa-solid fa-calendar"></i> Kontrollinformasjon</h2>
-        <label>Dato for kontroll:<br /><input type="date" name="kontrolldato" required /></label>
-        <label>Utført av (signatur):<br /><input type="text" name="signatur" placeholder="Navn / signatur" required /></label>
+        <h2>Kontrollinformasjon</h2>
+        <label>Dato for kontroll:
+          <input type="date" name="kontrolldato" id="kontrolldato" />
+        </label>
+        <label>Utført av (signatur):
+          <input type="text" name="signatur" placeholder="Navn / signatur" required />
+        </label>
       </div>
 
-      <!-- Seksjoner 1–7... -->
-      <!-- (Same as previous: Bygg → Universell utforming) -->
-
-      <!-- Seksjon 7: Dokumentasjon -->
       <div class="card">
-        <h2><i class="fa-solid fa-folder-open"></i> 7. Dokumentasjon og rutiner</h2>
-        <label><input type="checkbox" name="dok1"> HMS-plan er oppdatert</label>
-        <label><input type="checkbox" name="dok2"> FDV-dokumentasjon er tilgjengelig</label>
-        <label><input type="checkbox" name="dok3"> Serviceavtaler er dokumentert</label>
-        <label><input type="checkbox" name="dok4"> Kontrollrapporter er arkivert</label>
-        <label><input type="checkbox" name="dok5"> Avvik registreres og følges opp</label>
-        <label><input type="checkbox" name="dok6"> Rutiner for egenkontroll følges</label>
+        <h2>🖼️ Last opp bilder</h2>
+        <input type="file" id="bilder" multiple accept="image/*" />
+        <div id="preview"></div>
+        <label><input type="checkbox" id="inkluderPdfBilder" /> Inkluder bilder i PDF</label>
+        <label><input type="checkbox" id="inkluderExcelBilder" /> Inkluder bilder i Excel (lenke)</label>
       </div>
 
-      <!-- Notater -->
+      <!-- Sjekkliste-seksjoner -->
+      <div id="seksjoner"></div>
+
       <div class="card">
-        <h2><i class="fa-solid fa-note-sticky"></i> Notater</h2>
-        <textarea name="notater" rows="4" placeholder="Skriv observasjoner..."></textarea>
+        <h2>📝 Notater</h2>
+        <textarea name="notater" rows="4" placeholder="Skriv notater eller observasjoner her..."></textarea>
       </div>
 
-      <!-- Bilder -->
-      <div class="card">
-        <h2><i class="fa-solid fa-image"></i> Bilder</h2>
-        <input type="file" name="bilder" accept="image/*" multiple onchange="previewImages(event)" />
-        <div class="img-preview"></div>
-      </div>
-
-      <!-- Knappene -->
       <div class="buttons">
         <button type="button" onclick="lagre()">💾 Lagre</button>
         <button type="button" onclick="hent()">🔄 Hent</button>
@@ -82,84 +134,84 @@
         <button type="button" onclick="eksporterPDF()">📄 PDF</button>
         <button type="button" onclick="eksporterExcel()">📊 Excel</button>
       </div>
+
+      <div id="download-links">
+        <p>Last ned:</p>
+        <a id="pdfLink" href="#" download="egenkontroll.pdf">📥 PDF</a>
+        <a id="excelLink" href="#" download="egenkontroll.xlsx">📥 Excel</a>
+      </div>
     </form>
-    <div class="download-links"></div>
   </div>
 
-  <!-- Skripter -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script>
     const nøkkel = 'egenkontroll-data';
+    const today = '2025-07-05';
+    const seksjoner = [
+      ['1. Bygg', ['Fasade og yttervegger', 'Tak er tett', 'Vinduer og dører', 'Rømningsveier', 'Trapper og rekkverk']],
+      ['2. Brann', ['Brannalarmanlegg', 'Røykvarslere', 'Slokkeutstyr', 'Branninstruks', 'Nødlys']],
+      ['3. Elektrisk', ['Sikringsskap', 'Skader på ledninger', 'Kontakter jordet', 'Jordfeilbryter', 'Nødbelysning']],
+      ['4. VVS/Ventilasjon', ['Ingen lekkasjer', 'Vanntrykk og temperatur', 'Ventilasjon filtrert', 'Kjøling og varme']],
+      ['5. Renhold', ['Avfall', 'Sanitæranlegg', 'Renholdsrutiner', 'Såpe og papir']],
+      ['6. Universell utforming', ['Trinnfri inngang', 'Tilgjengelig toalett', 'Lesbare skilt', 'Tilrettelegging synshemmede']],
+      ['7. Dokumentasjon og rutiner', ['HMS-plan oppdatert', 'FDV-dokumentasjon', 'Serviceavtaler', 'Kontrollrapporter', 'Avvik følger opp', 'Rutiner følges']]
+    ];
 
-    // Automatiske dato
-    document.addEventListener('DOMContentLoaded', () => {
-      const ctrlDato = document.querySelector('[name=kontrolldato]');
-      ctrlDato.value = new Date().toISOString().split('T')[0];
+    document.getElementById('kontrolldato').value = today;
+
+    const seksjonerDiv = document.getElementById('seksjoner');
+    seksjoner.forEach(([title, points], idx) => {
+      const div = document.createElement('div');
+      div.className = 'card';
+      const id = `s${idx + 1}`;
+      div.innerHTML = `<h2>${title}</h2>` + points.map((p, i) =>
+        `<label><input type="checkbox" name="${id}_p${i+1}"> ${p}</label>`).join('');
+      seksjonerDiv.appendChild(div);
     });
 
-    function previewImages(e) {
-      const container = document.querySelector('.img-preview');
-      container.innerHTML = '';
-      const files = Array.from(e.target.files);
-      const images = files.map(f => URL.createObjectURL(f));
-      images.forEach(src => {
-        const img = document.createElement('img');
-        img.src = src;
-        container.appendChild(img);
+    // Bildevisning
+    const bildeData = [];
+    document.getElementById('bilder').addEventListener('change', e => {
+      const preview = document.getElementById('preview');
+      preview.innerHTML = '';
+      bildeData.length = 0;
+      [...e.target.files].forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          bildeData.push(evt.target.result);
+          const img = document.createElement('img');
+          img.src = evt.target.result;
+          preview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
       });
-    }
+    });
 
     function lagre() {
+      const form = document.getElementById('form');
       const data = {};
-      const form = document.forms[0];
       [...form.elements].forEach(el => {
-        if (el.name) {
-          if (el.type==='file') {
-            const files = el.files;
-            data.bilder = [];
-            Array.from(files).forEach(f => {
-              const reader = new FileReader();
-              reader.onload = () => {
-                data.bilder.push(reader.result);
-                localStorage.setItem(nøkkel, JSON.stringify(data));
-              };
-              reader.readAsDataURL(f);
-            });
-          } else {
-            data[el.name] = el.type==='checkbox' ? el.checked : el.value;
-            localStorage.setItem(nøkkel, JSON.stringify(data));
-          }
-        }
+        if (el.name) data[el.name] = el.type === 'checkbox' ? el.checked : el.value;
       });
+      localStorage.setItem(nøkkel, JSON.stringify(data));
       alert('✔️ Lagret!');
     }
 
     function hent() {
       const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
-      const form = document.forms[0];
-      [...form.elements].forEach(el => {
+      [...document.forms[0].elements].forEach(el => {
         if (data.hasOwnProperty(el.name)) {
-          if (el.type==='checkbox') el.checked = data[el.name];
-          else if (el.type!=='file') el.value = data[el.name];
+          el.type === 'checkbox' ? el.checked = data[el.name] : el.value = data[el.name];
         }
       });
-      if (data.bilder) {
-        const container = document.querySelector('.img-preview');
-        container.innerHTML = '';
-        data.bilder.forEach(src => {
-          const img = document.createElement('img');
-          img.src = src;
-          container.appendChild(img);
-        });
-      }
     }
 
     function nullstill() {
-      if (confirm('Slette all data?')) {
+      if (confirm('Slette all lagret data?')) {
         localStorage.removeItem(nøkkel);
-        document.forms[0].reset();
-        document.querySelector('.img-preview').innerHTML = '';
+        document.getElementById('form').reset();
+        document.getElementById('preview').innerHTML = '';
       }
     }
 
@@ -169,86 +221,86 @@
       const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
       let y = 40;
       doc.setFontSize(16);
-      doc.text('Egenkontroll næringsbygg', 40, y); y+=30;
+      doc.text('Egenkontroll næringsbygg', 40, y);
+      y += 30;
 
-      const seksjoner = {
-        '1. Bygg': ['bygg1','bygg2','bygg3','bygg4','bygg5'],
-        '2. Brann': ['brann1','brann2','brann3','brann4','brann5'],
-        '3. Elektrisk': ['el1','el2','el3','el4','el5'],
-        '4. VVS/Ventilasjon': ['vvs1','vvs2','vvs3','vvs4'],
-        '5. Renhold': ['rh1','rh2','rh3','rh4'],
-        '6. Universell utforming': ['uu1','uu2','uu3','uu4'],
-        '7. Dokumentasjon & rutiner': ['dok1','dok2','dok3','dok4','dok5','dok6']
-      };
-
-      doc.setFontSize(12);
-      for (const [title, keys] of Object.entries(seksjoner)) {
-        doc.setFont(undefined, 'bold'); doc.text(title, 40, y); y+=20;
+      seksjoner.forEach(([title, points], i) => {
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text(`${title}`, 40, y);
+        y += 20;
         doc.setFont(undefined, 'normal');
-        keys.forEach(key => {
-          doc.text(`• ${key}: ${data[key] ? '✅' : '❌'}`, 60, y); y+=18;
-          if (y>750) {doc.addPage(); y=40;}
+        points.forEach((txt, j) => {
+          const key = `s${i+1}_p${j+1}`;
+          const val = data[key] ? '✅' : '❌';
+          doc.text(`• ${txt}: ${val}`, 60, y);
+          y += 18;
         });
-        y+=10;
-      }
+        y += 10;
+      });
 
       if (data.notater) {
-        doc.setFont(undefined,'bold'); doc.text('📝 Notater',40,y); y+=20;
-        doc.setFont(undefined,'normal');
-        doc.text(doc.splitTextToSize(data.notater, 500), 60, y);
-        y+=20;
+        doc.setFont(undefined, 'bold');
+        doc.text('📝 Notater:', 40, y); y += 20;
+        doc.setFont(undefined, 'normal');
+        const lines = doc.splitTextToSize(data.notater, 460);
+        doc.text(lines, 60, y); y += lines.length * 16;
       }
 
-      y+=20;
-      doc.setFont(undefined,'bold'); doc.text('Signatur og dato',40,y); y+=20;
-      doc.setFont(undefined,'normal');
-      doc.text(`🖊️ ${data.signatur}`,60,y); y+=18;
-      doc.text(`📅 ${data.kontrolldato}`,60,y); y+=30;
+      y += 30;
+      doc.setFont(undefined, 'bold');
+      doc.text('Signatur og dato:', 40, y); y += 20;
+      doc.setFont(undefined, 'normal');
+      doc.text(`🖊️ ${data.signatur || ''}`, 60, y); y += 18;
+      doc.text(`📅 ${data.kontrolldato || ''}`, 60, y);
 
-      if (data.bilder) {
-        for (const src of data.bilder) {
-          doc.addImage(src, 'JPEG', 60, y, 100, 100);
-          y+=110;
-          if (y>700) {doc.addPage(); y=40;}
+      if (document.getElementById('inkluderPdfBilder').checked) {
+        y += 30;
+        doc.setFont(undefined, 'bold');
+        doc.text('🖼️ Vedlagte bilder:', 40, y); y += 20;
+        for (let i = 0; i < bildeData.length; i++) {
+          if (y > 700) { doc.addPage(); y = 40; }
+          doc.addImage(bildeData[i], 'JPEG', 60, y, 100, 75);
+          y += 85;
         }
       }
 
-      const pdfBlob = doc.output('blob');
-      const url = URL.createObjectURL(pdfBlob);
-      const link = document.querySelector('.download-links');
-      link.innerHTML = `<a href="${url}" download="egenkontroll.pdf">Last ned PDF</a>`;
+      const blob = doc.output('blob');
+      const url = URL.createObjectURL(blob);
+      document.getElementById('pdfLink').href = url;
+      document.getElementById('download-links').style.display = 'block';
     }
 
     function eksporterExcel() {
       const data = JSON.parse(localStorage.getItem(nøkkel) || '{}');
       const rows = [];
-      const seksjoner = {
-        '1. Bygg': ['bygg1','bygg2','bygg3','bygg4','bygg5'],
-        '2. Brann': ['brann1','brann2','brann3','brann4','brann5'],
-        '3. Elektrisk': ['el1','el2','el3','el4','el5'],
-        '4. VVS/Vent': ['vvs1','vvs2','vvs3','vvs4'],
-        '5. Renhold': ['rh1','rh2','rh3','rh4'],
-        '6. Universell utforming': ['uu1','uu2','uu3','uu4'],
-        '7. Dokumentasjon & rutiner': ['dok1','dok2','dok3','dok4','dok5','dok6']
-      };
 
-      Object.entries(seksjoner).forEach(([title, keys]) => {
+      seksjoner.forEach(([title, points], i) => {
         rows.push({ Seksjon: title });
-        keys.forEach(k => rows.push({ Punkt: k, Status: data[k] ? 'OK' : 'Mangler' }));
+        points.forEach((txt, j) => {
+          const key = `s${i+1}_p${j+1}`;
+          rows.push({ Punkt: txt, Status: data[key] ? 'OK' : 'Mangler' });
+        });
         rows.push({});
       });
 
       rows.push({ Notater: data.notater || '' });
       rows.push({ Signatur: data.signatur || '', Dato: data.kontrolldato || '' });
 
+      if (document.getElementById('inkluderExcelBilder').checked) {
+        bildeData.forEach((base64, i) => {
+          rows.push({ Bilde: `Vedlagt bilde ${i + 1}`, Base64: base64.substring(0, 50) + '...' });
+        });
+      }
+
       const ws = XLSX.utils.json_to_sheet(rows);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Egenkontroll');
-      const wbout = XLSX.write(wb, { bookType:'xlsx', type:'array' });
-      const blob = new Blob([wbout], { type: 'application/octet-stream' });
-      const url = URL.createObjectURL(blob);
-      const link = document.querySelector('.download-links');
-      link.innerHTML += `<a href="${url}" download="egenkontroll.xlsx">Last ned Excel</a>`;
+      const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'blob' });
+
+      const url = URL.createObjectURL(wbout);
+      document.getElementById('excelLink').href = url;
+      document.getElementById('download-links').style.display = 'block';
     }
 
     window.onload = hent;
