@@ -1,7 +1,7 @@
 // auth.js (brukes både på login.html og index.html)
 
 const validUsers = [
-  { username: 'admin', password: 'hemmelig' },
+  { username: 'Bjørn', password: 'Theodor2012' },
   { username: 'montør', password: 'kontroll' }
 ];
 
